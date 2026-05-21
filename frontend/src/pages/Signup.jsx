@@ -14,13 +14,13 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        try {
-            await API.post('/signup', formData);
-            alert('Registration successful! Redirecting to login...');
-            navigate('/login');
-        } catch (err) {
-            setError(err.response?.data?.message || 'Something went wrong');
-        }
+       try {
+    // Aapka signup call logic...
+} catch (error) {
+    // "Something went wrong" ki jagah backend ka actual error message uthein:
+    const errorMsg = error.response?.data?.message || "Something went wrong. Please try again.";
+    setError(errorMsg); // Jo bhi aapka state variable hai error show karne ke liye
+}
     };
 
     return (
