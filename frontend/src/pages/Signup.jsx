@@ -10,19 +10,37 @@ const Signup = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-       try {
-    // Aapka signup call logic...
-} catch (error) {
-    // "Something went wrong" ki jagah backend ka actual error message uthein:
-    const errorMsg = error.response?.data?.message || "Something went wrong. Please try again.";
-    setError(errorMsg); // Jo bhi aapka state variable hai error show karne ke liye
-}
-    };
+    // Form fields validation check
+    if (!formData.username || !formData.email || !formData.password) {
+        setError("All fields are required!");
+        return;
+    }
 
+    try {
+        // ASLI BACKEND CALL YAHAN HO RAHI HAI:
+        const response = await API.post('/signup', {
+            username: formData.username,
+            email: formData.email,
+            password: formData.password
+        });
+
+        // Agar signup successful ho jaye:
+        if (response.data) {
+            alert("Account Created Successfully! Redirecting to Login...");
+            navigate('/login'); // Signup ke baad seedha login page par bheje ga
+        }
+
+    } catch (error) {
+        // Agar backend error de (jaise email already exists):
+        console.error("Signup error detail:", error);
+        const errorMsg = error.response?.data?.message || "Something went wrong. Please try again.";
+        setError(errorMsg);
+    }
+};
     return (
         <div className="bg-[#0D0E12] min-h-screen flex items-center justify-center font-sans px-6">
             <div className="w-full max-w-md bg-[#16181F] border border-gray-800/60 rounded-2xl p-8 shadow-2xl">
