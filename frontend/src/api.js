@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: '"https://authentication-mongodb-5o3o.vercel.app/api/auth";' });
+const API = axios.create({ baseURL: 'https://authentication-mongodb-5o3o.vercel.app/api/auth' });
 
 // Ye logic har request ke saath Token khud hi bhej dega
 API.interceptors.request.use((req) => {
